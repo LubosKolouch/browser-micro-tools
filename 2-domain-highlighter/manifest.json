@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Domain Highlighter Micro-Tool",
+  "version": "1.0.0",
+  "description": "Visually flags external and third-party domains in web apps and email interfaces.",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["style.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
