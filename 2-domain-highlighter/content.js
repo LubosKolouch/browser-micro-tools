@@ -9,17 +9,18 @@ function revealDestinationDomains() {
       const targetUrl = new URL(a.href);
       if (!targetUrl.hostname) return;
 
-      // Create domain badge showing where the link actually points
-      const badge = document.createElement("span");
-      badge.className = "micro-domain-badge";
-      badge.textContent = ` [-> ${targetUrl.hostname}]`;
+      // Highlight only if target domain is different from current host
+      const isExternal = targetUrl.hostname !== currentHost &&
+        !targetUrl.hostname.endsWith("." + currentHost) &&
+        !currentHost.endsWith("." + targetUrl.hostname);
 
-      // Highlight if target domain is different from current host
-      if (targetUrl.hostname !== currentHost && !targetUrl.hostname.endsWith("." + currentHost)) {
+      if (isExternal) {
         a.classList.add("micro-external-link");
+        const badge = document.createElement("span");
+        badge.className = "micro-domain-badge";
+        badge.textContent = ` [-> ${targetUrl.hostname}]`;
+        a.appendChild(badge);
       }
-
-      a.appendChild(badge);
     } catch {
       // Skip invalid URLs
     }
